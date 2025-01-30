@@ -3,7 +3,6 @@ const path = require('path');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const Signup = require('./models/signupSchema');
-const Attendance = require('./models/AttendenceScahema');
 const Login = require('./models/loginSchema');
 const bcrypt = require('bcrypt');
 const cors=require('cors');
