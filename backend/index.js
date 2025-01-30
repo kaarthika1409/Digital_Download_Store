@@ -34,7 +34,7 @@ catch(err){
     next();
 }
 app.get('/', (req, res) => {
-    res.send("this is the backend for students attedence tracker"
+    res.send("store loaded successfully"
     );
 });
 app.get('/json', verifyToken,(req, res) => {
