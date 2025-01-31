@@ -4,10 +4,26 @@ const Download = () => {
     const [purchasedBooks, setPurchasedBooks] = useState([]);
 
     useEffect(() => {
-        
         const storedBooks = JSON.parse(localStorage.getItem("purchasedBooks")) || [];
         setPurchasedBooks(storedBooks);
     }, []);
+
+    
+    const handleDownload = (link, name) => {
+        fetch(link)
+            .then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = `Book-${name}.pdf`; 
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => console.error("Download failed:", error));
+    };
 
     return (
         <div style={styles.container}>
@@ -16,9 +32,13 @@ const Download = () => {
                 purchasedBooks.map((book, index) => (
                     <div key={index} style={styles.book}>
                         <p>{book.name}</p>
-                        <a href={book.downloadLink} download>
-                            <button style={styles.button}>Download Your Product</button>
-                        </a>
+                       
+                        <button 
+                            style={styles.button} 
+                            onClick={() => handleDownload(book.downloadLink, book.name)}
+                        >
+                            Download Your Product
+                        </button>
                     </div>
                 ))
             ) : (
