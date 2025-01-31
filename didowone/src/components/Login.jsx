@@ -13,22 +13,22 @@ const Login = () => {
         console.log("Event triggered");
 
         try {
-            // Send login request to the backend
+           
             const req = await axios.post('http://localhost:3000/login', {
                 email: email,
                 password: password
             });
 
-            // Check the response
+           
             if (req.data.message === "Login Successful") {
-                alert("Login Successful"); // Notification for success
-                navigate("/Home"); // Redirect to the home page
+                alert("Login Successful"); 
+                navigate("/Home"); 
             } else {
-                alert("Login Failed: " + req.data.message); // Notification for failure
+                alert("Login Failed: " + req.data.message);
             }
         } catch (err) {
             console.log(err);
-            alert("Login Failed: An error occurred. Please try again."); // Notification for error
+            alert("Login Failed: An error occurred. Please try again."); 
         }
     };
 
