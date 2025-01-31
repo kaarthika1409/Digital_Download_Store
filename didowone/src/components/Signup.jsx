@@ -3,9 +3,7 @@ import{useNavigate} from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 const Signup=()=>{
-    var [firstname,setFirstName]=useState('');
-    var [lastname,setLastName]=useState('');
-    var [username,setUserName]=useState('');
+    
     var [email,setEmail]=useState('');
     var [password,setPassword]=useState('');
     var Navigate=useNavigate();
@@ -14,10 +12,8 @@ const Signup=()=>{
         console.log("Event triggered")
         try{
              
-        const req= await axios.post('http://localhost:3001/signup',{
-            firstName:firstname,
-            lastName:lastname,
-            userName:username,
+        const req= await axios.post('http://localhost:3000/signup',{
+            
            email: email,
            password: password
         })
