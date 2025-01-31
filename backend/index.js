@@ -8,14 +8,14 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const app = express();
 
-// Load environment variables
+
 dotenv.config();
 
-// Middleware
+
 app.use(cors());
 app.use(express.json());
 
-// MongoDB Connection
+
 mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log("MongoDB Connection Successful");
@@ -24,7 +24,7 @@ mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTop
         console.error("MongoDB Connection Unsuccessful:", err.message);
     });
 
-// Token Verification Middleware
+
 const verifyToken = (req, res, next) => {
     const token = req.headers.authorization;
     if (!token) return res.status(401).send("Access Denied");
@@ -39,7 +39,7 @@ const verifyToken = (req, res, next) => {
     }
 };
 
-// Routes
+
 app.get('/', (req, res) => {
     res.send("Store loaded successfully");
 });
@@ -51,7 +51,7 @@ app.get('/json', verifyToken, (req, res) => {
     });
 });
 
-// Signup Endpoint
+
 app.post('/signup', async (req, res) => {
     const { email, password } = req.body;
 
@@ -78,28 +78,27 @@ app.post('/signup', async (req, res) => {
     }
 });
 
-// Login Endpoint (Now Saves Logins in MongoDB)
+
 app.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        // Find the user by email
+       
         const user = await Signup.findOne({ email });
         if (!user) {
             return res.status(401).send({ message: "User not found. Please sign up!" });
         }
 
-        // Compare the password
+       
         const isPasswordCorrect = await bcrypt.compare(password, user.password);
         if (!isPasswordCorrect) {
             return res.status(401).send({ message: "Invalid password" });
         }
 
-        // Generate a JWT token
+       
         const payload = { email: user.email };
         const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
 
-        // Save email and password in the login collection
         await Login.create({ email, password: user.password });
 
         res.status(200).send({ message: "Login Successful", token: token });
@@ -109,7 +108,7 @@ app.post("/login", async (req, res) => {
 });
 
 
-// Fetch all signup details (for testing)
+
 app.get('/getsignupdet', async (req, res) => {
     try {
         const signUpdet = await Signup.find();
@@ -119,7 +118,7 @@ app.get('/getsignupdet', async (req, res) => {
     }
 });
 
-// Fetch all login records (new route)
+
 app.get('/getlogindet', async (req, res) => {
     try {
         const loginDetails = await Login.find();
@@ -129,7 +128,7 @@ app.get('/getlogindet', async (req, res) => {
     }
 });
 
-// Start the server
+
 app.listen(3000, () => {
     console.log("Server Started on Port 3001");
 });
