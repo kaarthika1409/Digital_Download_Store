@@ -14,7 +14,7 @@ const Login = () => {
 
         try {
             // Send login request to the backend
-            const req = await axios.post('http://localhost:3000/login', {
+            const req = await axios.post('http://localhost:3001/login', {
                 email: email,
                 password: password
             });

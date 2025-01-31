@@ -130,6 +130,6 @@ app.get('/getlogindet', async (req, res) => {
 });
 
 // Start the server
-app.listen(3000, () => {
+app.listen(3001, () => {
     console.log("Server Started on Port 3001");
 });

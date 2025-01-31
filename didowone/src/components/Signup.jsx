@@ -12,7 +12,7 @@ const Signup=()=>{
         console.log("Event triggered")
         try{
              
-        const req= await axios.post('http://localhost:3000/signup',{
+        const req= await axios.post('http://localhost:3001/signup',{
             
            email: email,
            password: password
